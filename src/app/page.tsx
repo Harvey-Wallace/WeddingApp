@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import PhotoUpload from '@/components/PhotoUpload';
+import AddToHomeScreen from '@/components/AddToHomeScreen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export default function Home() {
@@ -10,6 +11,11 @@ export default function Home() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
+        {/* Add to Home Screen Prompt */}
+        <ErrorBoundary>
+          <AddToHomeScreen />
+        </ErrorBoundary>
+        
         {/* Elegant background pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.03),transparent_50%)]" />
         

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import PWAProvider from '@/components/PWAProvider';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -51,9 +52,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
       <body className={`${inter.variable} ${playfairDisplay.variable} font-sans antialiased`}>
-        <div className="font-sans antialiased">
+        <PWAProvider>
           {children}
-        </div>
+        </PWAProvider>
       </body>
     </html>
   );
