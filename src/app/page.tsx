@@ -1,4 +1,5 @@
 import PhotoUpload from '@/components/PhotoUpload';
+import AddToHomeScreen from '@/components/AddToHomeScreen';
 
 export default function Home() {
   return (
@@ -54,6 +55,9 @@ export default function Home() {
           </p>
         </footer>
       </div>
+      
+      {/* Add to Home Screen Prompt */}
+      <AddToHomeScreen />
     </div>
   );
 }
