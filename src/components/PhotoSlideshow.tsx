@@ -23,6 +23,7 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
 
   // Fetch photos from API
   const fetchPhotos = async () => {
@@ -55,21 +56,40 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
 
   // Auto-advance slideshow
   useEffect(() => {
-    if (!isPlaying || photos.length === 0) return;
+    if (!isPlaying || photos.length === 0) {
+      setProgress(0);
+      return;
+    }
+
+    const startTime = Date.now();
+    
+    const progressInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progressPercent = (elapsed / interval) * 100;
+      setProgress(Math.min(progressPercent, 100));
+    }, 50);
 
     const slideInterval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % photos.length);
+      setProgress(0);
     }, interval);
 
-    return () => clearInterval(slideInterval);
-  }, [isPlaying, photos.length, interval]);
+    return () => {
+      clearInterval(slideInterval);
+      clearInterval(progressInterval);
+    };
+  }, [isPlaying, photos.length, interval, currentIndex]);
 
   const goToPrevious = () => {
+    if (photos.length === 0) return;
     setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
+    setProgress(0);
   };
 
   const goToNext = () => {
+    if (photos.length === 0) return;
     setCurrentIndex((prev) => (prev + 1) % photos.length);
+    setProgress(0);
   };
 
   const togglePlayPause = () => {
@@ -115,6 +135,12 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
   }
 
   const currentPhoto = photos[currentIndex];
+
+  // Safety check for current photo
+  if (!currentPhoto && photos.length > 0) {
+    setCurrentIndex(0);
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
@@ -223,7 +249,7 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
           <div
             className="h-full bg-white transition-all duration-100 ease-linear"
             style={{
-              width: `${((Date.now() % interval) / interval) * 100}%`,
+              width: `${progress}%`,
             }}
           />
         </div>
