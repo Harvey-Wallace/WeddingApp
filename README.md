@@ -124,12 +124,22 @@ Photos are stored in your Cloudinary account. You can:
 - Get optimized URLs for sharing
 
 ### Photo Organization
-Photos are automatically stored in the `wedding-photos` folder with:
-- Timestamp
-- Random identifier
-- Automatic optimization and multiple formats
+Photos are automatically organized in Cloudinary with:
+- **Date-based folders**: Photos grouped by upload date (YYYY-MM-DD)
+- **Unique identifiers**: Timestamp + random string for each photo
+- **Automatic tagging**: 'wedding', 'guest-upload', and date tags
+- **Metadata preservation**: Original filename and upload timestamp
+- **Automatic optimization**: Multiple formats and sizes generated
 
-Example: `wedding-photos/1691234567890-abc123def456` (Cloudinary handles the file extension automatically)
+Example structure:
+```
+your-wedding-photos/
+├── 2025-08-10/
+│   ├── 1691234567890-abc123.jpg
+│   └── 1691234567891-def456.jpg
+├── 2025-08-11/
+│   └── 1691321234567-ghi789.jpg
+```
 
 ## 🎉 Perfect for Your Big Day!
 

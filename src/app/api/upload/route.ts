@@ -51,22 +51,42 @@ export async function POST(request: NextRequest) {
       // Convert buffer to base64 for Cloudinary
       const base64String = `data:${file.type};base64,${buffer.toString('base64')}`;
 
-      // Generate unique public ID
+      // Create organized folder structure
+      const now = new Date();
+      const dateFolder = now.toISOString().split('T')[0]; // YYYY-MM-DD format
       const timestamp = Date.now();
       const randomString = Math.random().toString(36).substring(2, 15);
-      const publicId = `wedding-photos/${timestamp}-${randomString}`;
+      
+      // You can customize this folder structure:
+      // Option 1: By date - wedding-photos/2025-08-17/timestamp-random
+      // Option 2: By event - wedding-photos/ceremony/timestamp-random
+      // Option 3: Custom folder from environment variable
+      
+      const customFolder = process.env.CLOUDINARY_UPLOAD_FOLDER || 'wedding-photos';
+      const publicId = `${customFolder}/${dateFolder}/${timestamp}-${randomString}`;
 
       try {
         const result = await cloudinary.uploader.upload(base64String, {
           public_id: publicId,
-          folder: 'wedding-photos',
+          folder: customFolder, // This creates the main folder
           resource_type: 'auto',
-          quality: 'auto',
-          fetch_format: 'auto',
+          quality: 'auto:good', // Optimized quality
+          fetch_format: 'auto', // Auto format (WebP, AVIF when supported)
+          // Add transformation for wedding photos
+          transformation: [
+            {
+              quality: 'auto:good',
+              fetch_format: 'auto'
+            }
+          ],
           context: {
             originalName: file.name,
-            uploadedAt: new Date().toISOString(),
+            uploadedAt: now.toISOString(),
+            event: 'wedding',
+            uploadDate: dateFolder,
           },
+          // Add tags for easy organization
+          tags: ['wedding', 'guest-upload', dateFolder],
         });
 
         return {

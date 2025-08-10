@@ -54,6 +54,11 @@ This guide will help you deploy your Wedding Photo Sharing App to Railway.
    CLOUDINARY_API_SECRET=your_api_secret
    ```
    
+   **Optional (for better organization)**:
+   ```
+   CLOUDINARY_UPLOAD_FOLDER=sarah-and-john-wedding
+   ```
+   
    **Optional**:
    ```
    NODE_ENV=production
@@ -78,8 +83,33 @@ This guide will help you deploy your Wedding Photo Sharing App to Railway.
 | `CLOUDINARY_CLOUD_NAME` | Production | Your Cloudinary cloud name (from dashboard) |
 | `CLOUDINARY_API_KEY` | Production | Your Cloudinary API key (from dashboard) |
 | `CLOUDINARY_API_SECRET` | Production | Your Cloudinary API secret (from dashboard) |
+| `CLOUDINARY_UPLOAD_FOLDER` | Optional | Custom folder name (e.g., "sarah-and-john-wedding") |
 
 **Note**: The app works without Cloudinary credentials for testing, but photos won't be permanently stored.
+
+## 📁 Photo Organization in Cloudinary
+
+Your wedding photos will be automatically organized in Cloudinary with this structure:
+
+```
+your-wedding-folder/
+├── 2025-08-10/          (photos uploaded on Aug 10)
+│   ├── 1691234567890-abc123.jpg
+│   ├── 1691234567891-def456.jpg
+│   └── ...
+├── 2025-08-11/          (photos uploaded on Aug 11)
+│   ├── 1691321234567-ghi789.jpg
+│   └── ...
+```
+
+**Benefits of this organization:**
+- **Easy browsing** by date in Cloudinary dashboard
+- **Automatic tagging** with 'wedding', 'guest-upload', and date
+- **Quick filtering** to find photos from specific days
+- **Metadata preservation** including original filename and upload timestamp
+
+**To customize the main folder name:**
+Add `CLOUDINARY_UPLOAD_FOLDER=your-custom-name` to your environment variables.
 
 ## Troubleshooting
 
