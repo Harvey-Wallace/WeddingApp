@@ -71,12 +71,10 @@ export async function POST(request: NextRequest) {
           folder: customFolder, // This creates the main folder structure
           resource_type: 'auto',
           quality: 'auto:good', // Optimized quality
-          fetch_format: 'auto', // Auto format (WebP, AVIF when supported)
           // Add transformation for wedding photos
           transformation: [
             {
-              quality: 'auto:good',
-              fetch_format: 'auto'
+              quality: 'auto:good'
             }
           ],
           context: {

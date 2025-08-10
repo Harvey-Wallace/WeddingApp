@@ -83,15 +83,13 @@ export async function GET(request: NextRequest) {
         width: 800,
         height: 600,
         crop: 'fill',
-        quality: 'auto',
-        format: 'auto'
+        quality: 'auto'
       }),
       thumbnail: cloudinary.url(resource.public_id, {
         width: 300,
         height: 200,
         crop: 'fill',
-        quality: 'auto',
-        format: 'auto'
+        quality: 'auto'
       }),
       uploadedAt: resource.uploaded_at,
       tags: resource.tags || []
