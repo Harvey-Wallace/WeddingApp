@@ -37,11 +37,8 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
         throw new Error(data.error || 'Failed to fetch photos');
       }
       
-      setPhotos(data.photos);
-      setError(null);
-    } catch (err) {
-      // In development, show sample photos when API fails
-      if (process.env.NODE_ENV === 'development') {
+      // If we get an empty photos array, show sample photos for demo
+      if (!data.photos || data.photos.length === 0) {
         const samplePhotos: Photo[] = [
           {
             id: 'sample-1',
@@ -56,20 +53,15 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
             thumbnail: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=300&h=200&fit=crop&crop=center&auto=format&q=80',
             uploadedAt: new Date(Date.now() - 3600000).toISOString(),
             tags: ['wedding', 'romantic']
-          },
-          {
-            id: 'sample-3',
-            url: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop&crop=center&auto=format&q=80',
-            thumbnail: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=300&h=200&fit=crop&crop=center&auto=format&q=80',
-            uploadedAt: new Date(Date.now() - 7200000).toISOString(),
-            tags: ['wedding', 'memories']
           }
         ];
         setPhotos(samplePhotos);
-        setError(null);
       } else {
-        setError('Unable to load photos');
+        setPhotos(data.photos);
       }
+      setError(null);
+    } catch (err) {
+      setError('Unable to load photos');
       console.error('Error fetching photos:', err);
     } finally {
       setLoading(false);
@@ -187,6 +179,11 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
                   <Heart className="w-16 h-16 mx-auto mb-4 opacity-40" />
                   <p className="text-lg font-light">Image not available</p>
                   <p className="text-sm opacity-60 mt-2">Photo {currentIndex + 1} of {photos.length}</p>
+                  {currentPhoto && (
+                    <p className="text-xs opacity-40 mt-2 break-all px-4">
+                      URL: {currentPhoto.url}
+                    </p>
+                  )}
                 </div>
               </div>
             ) : (
