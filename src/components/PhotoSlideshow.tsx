@@ -171,7 +171,7 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
       {/* Main Photo Display */}
       <div className="relative h-screen flex items-center justify-center">
-        <div className="relative max-w-4xl max-h-[80vh] w-full mx-4">
+        <div className="relative max-w-4xl w-full mx-4" style={{ height: '80vh' }}>
           <div className="relative w-full h-full">
             {imageError ? (
               <div className="w-full h-full flex items-center justify-center bg-gray-800 rounded-lg">
