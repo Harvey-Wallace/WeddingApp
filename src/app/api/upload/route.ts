@@ -63,12 +63,12 @@ export async function POST(request: NextRequest) {
       // Option 3: Custom folder from environment variable
       
       const customFolder = process.env.CLOUDINARY_UPLOAD_FOLDER || 'wedding-photos';
-      const publicId = `${customFolder}/${dateFolder}/${timestamp}-${randomString}`;
+      const publicId = `${dateFolder}/${timestamp}-${randomString}`;
 
       try {
         const result = await cloudinary.uploader.upload(base64String, {
           public_id: publicId,
-          folder: customFolder, // This creates the main folder
+          folder: customFolder, // This creates the main folder structure
           resource_type: 'auto',
           quality: 'auto:good', // Optimized quality
           fetch_format: 'auto', // Auto format (WebP, AVIF when supported)

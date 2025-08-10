@@ -24,6 +24,7 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
+  const [imageError, setImageError] = useState<string | null>(null);
 
   // Fetch photos from API
   const fetchPhotos = async () => {
@@ -39,7 +40,36 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
       setPhotos(data.photos);
       setError(null);
     } catch (err) {
-      setError('Unable to load photos');
+      // In development, show sample photos when API fails
+      if (process.env.NODE_ENV === 'development') {
+        const samplePhotos: Photo[] = [
+          {
+            id: 'sample-1',
+            url: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&h=600&fit=crop&crop=center&auto=format&q=80',
+            thumbnail: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=300&h=200&fit=crop&crop=center&auto=format&q=80',
+            uploadedAt: new Date().toISOString(),
+            tags: ['wedding', 'celebration']
+          },
+          {
+            id: 'sample-2',
+            url: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=600&fit=crop&crop=center&auto=format&q=80',
+            thumbnail: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=300&h=200&fit=crop&crop=center&auto=format&q=80',
+            uploadedAt: new Date(Date.now() - 3600000).toISOString(),
+            tags: ['wedding', 'romantic']
+          },
+          {
+            id: 'sample-3',
+            url: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop&crop=center&auto=format&q=80',
+            thumbnail: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=300&h=200&fit=crop&crop=center&auto=format&q=80',
+            uploadedAt: new Date(Date.now() - 7200000).toISOString(),
+            tags: ['wedding', 'memories']
+          }
+        ];
+        setPhotos(samplePhotos);
+        setError(null);
+      } else {
+        setError('Unable to load photos');
+      }
       console.error('Error fetching photos:', err);
     } finally {
       setLoading(false);
@@ -72,6 +102,7 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
     const slideInterval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % photos.length);
       setProgress(0);
+      setImageError(null);
     }, interval);
 
     return () => {
@@ -84,12 +115,14 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
     if (photos.length === 0) return;
     setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
     setProgress(0);
+    setImageError(null);
   };
 
   const goToNext = () => {
     if (photos.length === 0) return;
     setCurrentIndex((prev) => (prev + 1) % photos.length);
     setProgress(0);
+    setImageError(null);
   };
 
   const togglePlayPause = () => {
@@ -148,14 +181,26 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
       <div className="relative h-screen flex items-center justify-center">
         <div className="relative max-w-4xl max-h-[80vh] w-full mx-4">
           <div className="relative w-full h-full">
-            <Image
-              src={currentPhoto.url}
-              alt="Wedding photo"
-              fill
-              className="object-contain rounded-lg shadow-2xl"
-              priority
-              sizes="(max-width: 1024px) 100vw, 1024px"
-            />
+            {imageError ? (
+              <div className="w-full h-full flex items-center justify-center bg-gray-800 rounded-lg">
+                <div className="text-center text-white/60">
+                  <Heart className="w-16 h-16 mx-auto mb-4 opacity-40" />
+                  <p className="text-lg font-light">Image not available</p>
+                  <p className="text-sm opacity-60 mt-2">Photo {currentIndex + 1} of {photos.length}</p>
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={currentPhoto.url}
+                alt="Wedding photo"
+                fill
+                className="object-contain rounded-lg shadow-2xl"
+                priority
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                onError={() => setImageError('Failed to load image')}
+                onLoad={() => setImageError(null)}
+              />
+            )}
           </div>
           
           {/* Photo overlay with metadata */}

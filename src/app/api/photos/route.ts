@@ -10,6 +10,17 @@ cloudinary.config({
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if Cloudinary is configured
+    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+      console.warn('Cloudinary not configured - returning empty result');
+      return NextResponse.json({
+        photos: [],
+        hasMore: false,
+        total: 0,
+        message: 'Cloudinary not configured'
+      });
+    }
+
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '20');
 
