@@ -1,36 +1,144 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💕 Wedding Photo Sharing App
 
-## Getting Started
+A beautiful, simple web application that allows wedding guests to upload and share photos from your special day! No login required - just drag, drop, and share the love.
 
-First, run the development server:
+## ✨ Features
 
+- **Simple & Elegant**: Clean, wedding-appropriate design
+- **No Authentication**: Guests can upload instantly without creating accounts  
+- **Mobile-First**: Responsive design that works perfectly on phones and computers
+- **Drag & Drop**: Easy photo uploads with modern drag-and-drop interface
+- **Cloud Storage**: Photos are securely stored in AWS S3
+- **Multiple Formats**: Supports JPEG, PNG, WebP, and HEIC files
+- **Real-time Feedback**: Upload progress and success notifications
+
+## 🚀 Quick Start
+
+### 1. Clone and Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Set up Environment Variables (Optional)
+Copy the environment template:
+```bash
+cp .env.example .env.local
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**For production**, add your AWS S3 credentials to `.env.local`:
+```env
+AWS_ACCESS_KEY_ID=your_aws_access_key_here
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key_here
+AWS_REGION=us-east-1
+AWS_S3_BUCKET_NAME=your-wedding-photos-bucket
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**For development/testing**, you can leave the AWS variables empty - the app will work but photos won't be permanently stored.
 
-## Learn More
+### 3. Run the Development Server
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🗂️ AWS S3 Setup (For Production)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Create an S3 Bucket**:
+   - Go to AWS S3 Console
+   - Create a new bucket (e.g., `your-wedding-photos-2025`)
+   - Enable public read access if you want to view photos later
 
-## Deploy on Vercel
+2. **Create AWS IAM User**:
+   - Go to AWS IAM Console
+   - Create a new user with programmatic access
+   - Attach policy with S3 permissions:
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Action": [
+           "s3:PutObject",
+           "s3:GetObject",
+           "s3:DeleteObject"
+         ],
+         "Resource": "arn:aws:s3:::your-wedding-photos-bucket/*"
+       }
+     ]
+   }
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Add credentials to `.env.local`** (see step 2 above)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Deployment
+
+### Deploy to Vercel (Recommended)
+1. Push your code to GitHub
+2. Connect your repository to [Vercel](https://vercel.com)
+3. Add your environment variables in Vercel's dashboard
+4. Deploy! Your guests can start uploading photos immediately.
+
+### Other Deployment Options
+- **Netlify**: Works great with Next.js
+- **AWS Amplify**: Native AWS integration
+- **Railway**: Simple deployment platform
+
+## 🎨 Customization
+
+### Change Colors & Styling
+Edit `src/app/globals.css` and the Tailwind classes in components to match your wedding theme.
+
+### Update Text & Messages
+Modify the text in:
+- `src/app/page.tsx` - Main page content
+- `src/components/PhotoUpload.tsx` - Upload messages
+
+### Add Your Names
+Update the page title and messages to include your names and wedding details.
+
+## 📱 How Guests Use It
+
+1. **Visit your website** on any device
+2. **Drag photos** into the upload area OR **click to browse**
+3. **Watch the upload progress** - photos are automatically saved
+4. **Get confirmation** when photos are successfully uploaded
+5. **That's it!** No accounts, no hassle.
+
+## 🛠️ Tech Stack
+
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety and better development experience
+- **Tailwind CSS v4** - Modern, utility-first CSS framework
+- **React Dropzone** - Drag-and-drop file uploads
+- **AWS S3** - Reliable cloud storage for photos
+- **Lucide Icons** - Beautiful, consistent icons
+
+## 📸 Photo Management
+
+### Accessing Uploaded Photos
+Photos are stored in your S3 bucket under the `wedding-photos/` folder. You can:
+- Download them via the AWS Console
+- Create a simple photo gallery (separate project)
+- Use AWS CLI to sync them locally
+
+### Photo Organization
+Photos are automatically named with:
+- Timestamp
+- Random identifier
+- Original file extension
+
+Example: `wedding-photos/1691234567890-abc123def456.jpg`
+
+## 🎉 Perfect for Your Big Day!
+
+This app is designed to capture all the candid, beautiful moments that professional photographers might miss. Your guests become your photographers, sharing their unique perspectives of your special day.
+
+## 📄 License
+
+MIT License - feel free to customize and use for your wedding!
+
+---
+
+**Made with 💕 for an unforgettable wedding day**
