@@ -13,8 +13,9 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Wedding Photos - Share Your Beautiful Moments",
-  description: "Upload and share your photos from our special day. Help us capture every magical moment!",
+  title: "Kelly & William | Wedding Photos",
+  description: "Share your beautiful moments from Kelly and William's black tie wedding celebration. Upload your photos to help capture every magical memory of our special day.",
+  keywords: "wedding, photos, Kelly Harvey, William Roebuck, black tie, celebration, memories",
 };
 
 export default function RootLayout({

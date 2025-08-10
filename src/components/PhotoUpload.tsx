@@ -75,99 +75,130 @@ export default function PhotoUpload() {
 
   return (
     <div className="space-y-8">
-      {/* Upload Area */}
+      {/* Elegant Upload Area */}
       <div
         {...getRootProps()}
         className={`
-          border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300
+          wedding-card rounded-lg p-16 text-center cursor-pointer transition-all duration-500 relative overflow-hidden
           ${isDragActive 
-            ? 'border-rose-400 bg-rose-50' 
-            : 'border-gray-300 hover:border-rose-300 hover:bg-rose-25'
+            ? 'border-white/40 bg-black/60 transform scale-[1.02]' 
+            : 'border-white/20 hover:border-white/30 hover:bg-black/50'
           }
-          ${uploadStatus.uploading ? 'pointer-events-none opacity-50' : ''}
+          ${uploadStatus.uploading ? 'pointer-events-none opacity-60' : ''}
         `}
       >
         <input {...getInputProps()} />
         
-        <div className="space-y-4">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.02),transparent_70%)]" />
+        
+        <div className="relative space-y-6">
           {uploadStatus.uploading ? (
-            <div className="animate-spin mx-auto w-12 h-12 text-rose-400">
-              <Upload size={48} />
+            <div className="flex flex-col items-center space-y-4">
+              <div className="animate-spin w-12 h-12 text-white/60">
+                <Upload size={48} />
+              </div>
+              <div className="w-16 h-px bg-white/20"></div>
             </div>
           ) : (
-            <ImageIcon className="mx-auto w-12 h-12 text-gray-400" />
+            <div className="flex flex-col items-center space-y-4">
+              <ImageIcon className="w-12 h-12 text-white/40" />
+              <div className="w-16 h-px bg-white/20"></div>
+            </div>
           )}
           
           <div>
-            <h3 className="text-xl font-medium text-gray-800 mb-2">
+            <h3 className="text-2xl font-serif font-light text-white mb-4 tracking-wide">
               {uploadStatus.uploading 
-                ? 'Uploading your photos...' 
+                ? 'Uploading Your Memories...' 
                 : isDragActive 
-                  ? 'Drop your photos here!' 
-                  : 'Upload Wedding Photos'
+                  ? 'Drop Your Photos Here' 
+                  : 'Share Your Photos'
               }
             </h3>
             
             {!uploadStatus.uploading && (
-              <p className="text-gray-600">
+              <p className="text-gray-300 font-light leading-relaxed">
                 Drag and drop your photos here, or{' '}
-                <span className="text-rose-600 font-medium">click to browse</span>
+                <span className="text-white underline underline-offset-4 font-medium">click to browse</span>
               </p>
             )}
           </div>
           
           {!uploadStatus.uploading && (
-            <div className="text-sm text-gray-500 space-y-1">
-              <p>Supports: JPEG, PNG, WebP, HEIC</p>
-              <p>Max file size: 10MB per photo</p>
+            <div className="text-sm text-gray-400 space-y-2 font-light">
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-3 h-px bg-gray-600"></div>
+                <span className="px-2">JPEG, PNG, WebP, HEIC</span>
+                <div className="w-3 h-px bg-gray-600"></div>
+              </div>
+              <p className="text-xs">Maximum 10MB per photo</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Status Messages */}
+      {/* Elegant Status Messages */}
       {uploadStatus.success && (
-        <div className="flex items-center space-x-2 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <CheckCircle className="w-5 h-5 text-green-600" />
-          <p className="text-green-800">Photos uploaded successfully! Thank you for sharing! 🎉</p>
+        <div className="wedding-card rounded-lg p-6">
+          <div className="flex items-center justify-center space-x-4">
+            <CheckCircle className="w-6 h-6 text-green-400" />
+            <div className="text-center">
+              <p className="text-white font-light">Photos uploaded successfully!</p>
+              <p className="text-gray-400 text-sm mt-1">Thank you for sharing these beautiful moments</p>
+            </div>
+          </div>
         </div>
       )}
 
       {uploadStatus.error && (
-        <div className="flex items-center space-x-2 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <AlertCircle className="w-5 h-5 text-red-600" />
-          <p className="text-red-800">{uploadStatus.error}</p>
+        <div className="wedding-card rounded-lg p-6 border-red-500/30">
+          <div className="flex items-center justify-center space-x-4">
+            <AlertCircle className="w-6 h-6 text-red-400" />
+            <div className="text-center">
+              <p className="text-red-300 font-light">{uploadStatus.error}</p>
+              <p className="text-gray-400 text-sm mt-1">Please try again</p>
+            </div>
+          </div>
         </div>
       )}
 
-      {/* Upload Progress */}
+      {/* Elegant Upload Progress */}
       {uploadStatus.uploading && (
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>Uploading photos...</span>
-            <span>{acceptedFiles.length} file{acceptedFiles.length !== 1 ? 's' : ''}</span>
+        <div className="wedding-card rounded-lg p-6 space-y-4">
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-gray-300 font-light">Processing your photos...</span>
+            <span className="text-gray-400">{acceptedFiles.length} file{acceptedFiles.length !== 1 ? 's' : ''}</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div className="bg-rose-400 h-2 rounded-full transition-all duration-300 animate-pulse w-2/3"></div>
+          <div className="w-full bg-gray-800 rounded-full h-1">
+            <div className="bg-gradient-to-r from-white/60 to-white/80 h-1 rounded-full transition-all duration-1000 animate-pulse w-3/4"></div>
           </div>
         </div>
       )}
 
-      {/* Uploaded Files Summary */}
+      {/* Uploaded Files Gallery */}
       {uploadedFiles.length > 0 && (
-        <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
-          <h4 className="font-medium text-gray-800 mb-3">
-            Uploaded Photos ({uploadedFiles.length})
-          </h4>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {uploadedFiles.slice(-8).map((file, index) => (
-              <div key={index} className="aspect-square bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center">
-                <ImageIcon className="w-6 h-6 text-gray-400" />
+        <div className="wedding-card rounded-lg p-8">
+          <div className="text-center mb-6">
+            <h4 className="font-serif font-light text-xl text-white mb-2 tracking-wide">
+              Uploaded Memories
+            </h4>
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-8 h-px bg-gray-600"></div>
+              <span className="text-gray-400 text-sm">({uploadedFiles.length})</span>
+              <div className="w-8 h-px bg-gray-600"></div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {uploadedFiles.slice(-12).map((file, index) => (
+              <div key={index} className="aspect-square bg-gray-800/50 rounded-lg border border-white/10 flex items-center justify-center hover:border-white/20 transition-colors">
+                <ImageIcon className="w-6 h-6 text-gray-500" />
               </div>
             ))}
-            {uploadedFiles.length > 8 && (
-              <div className="aspect-square bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
-                <span className="text-sm text-gray-500">+{uploadedFiles.length - 8} more</span>
+            {uploadedFiles.length > 12 && (
+              <div className="aspect-square bg-gray-800/30 rounded-lg border border-white/10 flex items-center justify-center">
+                <span className="text-sm text-gray-400 font-light">+{uploadedFiles.length - 12}</span>
               </div>
             )}
           </div>

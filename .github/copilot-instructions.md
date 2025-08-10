@@ -5,14 +5,25 @@
 This is a wedding photo sharing web application built with Next.js, TypeScript, and Tailwind CSS. The app allows wedding guests to upload photos without requiring authentication.
 
 ## Project Context
-- **Purpose**: Allow wedding guests to easily upload and share photos from the event
+- **Purpose**: Allow wedding guests to easily upload and share photos from Kelly & William's black tie wedding celebration
 - **Target Users**: Wedding guests using mobile devices and computers
 - **Key Requirements**: 
   - No login/authentication required
-  - Simple, elegant, wedding-appropriate design
+  - Sophisticated black tie wedding aesthetic matching the invitation design
   - Photo upload functionality with cloud storage
   - Responsive design for all devices
-  - Clean, user-friendly interface
+  - Elegant, luxury user interface
+
+## Design Theme
+- **Style**: Black tie wedding elegance
+- **Color Palette**: Deep charcoal/black backgrounds, crisp white typography, subtle gray accents
+- **Typography**: Sophisticated serif fonts (Playfair Display) for headings, clean sans-serif (Inter) for body text
+- **Visual Elements**: 
+  - W|K monogram with elegant divider
+  - Thin white borders and subtle drop shadows
+  - Minimalist luxury aesthetic
+  - Subtle background patterns and gradients
+  - Card-based layouts with backdrop blur effects
 
 ## Technical Stack
 - **Framework**: Next.js 15 with App Router
@@ -21,11 +32,12 @@ This is a wedding photo sharing web application built with Next.js, TypeScript, 
 - **Storage**: Cloudinary for image storage and optimization
 
 ## Design Guidelines
-- Use elegant, wedding-appropriate colors (soft pastels, whites, golds)
+- Use sophisticated black tie color palette (charcoal black, pure white, subtle grays)
 - Ensure mobile-first responsive design
-- Keep the interface simple and intuitive
-- Focus on accessibility and ease of use
-- Use modern, clean typography
+- Maintain elegant, luxury aesthetic throughout
+- Focus on accessibility while preserving sophistication
+- Use refined typography with proper letter spacing and font weights
+- Incorporate subtle animations and transitions for premium feel
 
 ## Code Guidelines
 - Follow Next.js 15 App Router conventions
