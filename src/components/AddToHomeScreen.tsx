@@ -25,23 +25,38 @@ export default function AddToHomeScreen() {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
+    // Safety check for window object
+    if (typeof window === 'undefined') return;
+    
     // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-      return;
+    try {
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        setIsInstalled(true);
+        return;
+      }
+    } catch (error) {
+      console.warn('Error checking display mode:', error);
     }
 
     // Detect device type
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isIOS = /iphone|ipad|ipod/.test(userAgent);
-    const isAndroid = /android/.test(userAgent);
+    let isIOS = false;
+    let isAndroid = false;
     
-    if (isIOS) {
-      setDeviceType('ios');
-    } else if (isAndroid) {
-      setDeviceType('android');
-    } else {
-      setDeviceType('desktop');
+    try {
+      const userAgent = navigator?.userAgent?.toLowerCase() || '';
+      isIOS = /iphone|ipad|ipod/.test(userAgent);
+      isAndroid = /android/.test(userAgent);
+      
+      if (isIOS) {
+        setDeviceType('ios');
+      } else if (isAndroid) {
+        setDeviceType('android');
+      } else {
+        setDeviceType('desktop');
+      }
+    } catch (error) {
+      console.warn('Error detecting device type:', error);
+      setDeviceType('desktop'); // fallback
     }
 
     // Handle beforeinstallprompt for Android/Desktop

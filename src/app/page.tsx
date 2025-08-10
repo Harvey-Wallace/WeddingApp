@@ -1,11 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import PhotoUpload from '@/components/PhotoUpload';
-import PhotoSlideshow from '@/components/PhotoSlideshow';
 import TabNavigation from '@/components/TabNavigation';
 import AddToHomeScreen from '@/components/AddToHomeScreen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+
+// Lazy load the slideshow to prevent initial load issues
+import dynamic from 'next/dynamic';
+
+const PhotoSlideshow = dynamic(() => import('@/components/PhotoSlideshow'), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-white/60 font-light">Loading gallery...</p>
+      </div>
+    </div>
+  )
+});
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'upload' | 'gallery'>('upload');
@@ -14,7 +28,9 @@ export default function Home() {
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900">
         {/* Add to Home Screen Prompt */}
-        <AddToHomeScreen />
+        <ErrorBoundary>
+          <AddToHomeScreen />
+        </ErrorBoundary>
         
         {activeTab === 'upload' ? (
           <>
@@ -74,7 +90,16 @@ export default function Home() {
           </>
         ) : (
           <ErrorBoundary>
-            <PhotoSlideshow />
+            <Suspense fallback={
+              <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-white/60 font-light">Loading gallery...</p>
+                </div>
+              </div>
+            }>
+              <PhotoSlideshow />
+            </Suspense>
           </ErrorBoundary>
         )}
 
