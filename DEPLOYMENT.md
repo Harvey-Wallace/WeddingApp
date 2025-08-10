@@ -2,11 +2,12 @@
 
 This guide will help you deploy your Wedding Photo Sharing App to Railway.
 
-## Prerequisites
+## Prerequisit- **Monitor Railway dashboard** for any issues
+4. **Check Cloudinary dashboard** to confirm photos are uploading and view them
 
 1. **GitHub Account** - Your code needs to be in a GitHub repository
 2. **Railway Account** - Sign up at [railway.app](https://railway.app)
-3. **AWS S3 Setup** (Optional but recommended for production)
+3. **Cloudinary Account** - Sign up for free at [cloudinary.com](https://cloudinary.com)
 
 ## Quick Deployment Steps
 
@@ -46,12 +47,11 @@ This guide will help you deploy your Wedding Photo Sharing App to Railway.
 3. **Configure Environment Variables**:
    Click on your service → Variables → Add the following:
    
-   **Required for S3 (Production)**:
+   **Required for Cloudinary (Production)**:
    ```
-   AWS_ACCESS_KEY_ID=your_aws_access_key
-   AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-   AWS_REGION=us-east-1
-   AWS_S3_BUCKET_NAME=your-wedding-photos-bucket
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
    ```
    
    **Optional**:
@@ -75,12 +75,11 @@ This guide will help you deploy your Wedding Photo Sharing App to Railway.
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `AWS_ACCESS_KEY_ID` | Production | Your AWS access key for S3 uploads |
-| `AWS_SECRET_ACCESS_KEY` | Production | Your AWS secret key for S3 uploads |
-| `AWS_REGION` | Production | AWS region where your S3 bucket is located |
-| `AWS_S3_BUCKET_NAME` | Production | Name of your S3 bucket for storing photos |
+| `CLOUDINARY_CLOUD_NAME` | Production | Your Cloudinary cloud name (from dashboard) |
+| `CLOUDINARY_API_KEY` | Production | Your Cloudinary API key (from dashboard) |
+| `CLOUDINARY_API_SECRET` | Production | Your Cloudinary API secret (from dashboard) |
 
-**Note**: The app works without S3 credentials for testing, but photos won't be permanently stored.
+**Note**: The app works without Cloudinary credentials for testing, but photos won't be permanently stored.
 
 ## Troubleshooting
 
@@ -90,8 +89,8 @@ This guide will help you deploy your Wedding Photo Sharing App to Railway.
 - Make sure your Node.js version is compatible (18+ recommended)
 
 ### Upload Issues
-- Verify S3 credentials are correct
-- Check S3 bucket permissions
+- Verify Cloudinary credentials are correct
+- Check Cloudinary dashboard for upload logs
 - Look at Railway logs for error details
 
 ### Performance
@@ -105,10 +104,10 @@ This guide will help you deploy your Wedding Photo Sharing App to Railway.
 - **Hobby Plan**: $5/month (perfect for weddings)
 - **Pro Plan**: $20/month (if you need more resources)
 
-### AWS S3
-- **Storage**: ~$0.023 per GB per month
-- **Requests**: ~$0.0004 per 1,000 requests
-- **Typical wedding**: $1-5 total for hundreds of photos
+### Cloudinary
+- **Free Tier**: 25GB storage + 25GB bandwidth monthly (perfect for most weddings!)
+- **Paid Plans**: Start at $89/month if you exceed free tier
+- **Typical wedding**: Free tier should cover hundreds of photos easily
 
 ## Security Notes
 

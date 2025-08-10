@@ -8,7 +8,7 @@ A beautiful, simple web application that allows wedding guests to upload and sha
 - **No Authentication**: Guests can upload instantly without creating accounts  
 - **Mobile-First**: Responsive design that works perfectly on phones and computers
 - **Drag & Drop**: Easy photo uploads with modern drag-and-drop interface
-- **Cloud Storage**: Photos are securely stored in AWS S3
+- **Cloud Storage**: Photos are securely stored in Cloudinary with automatic optimization
 - **Multiple Formats**: Supports JPEG, PNG, WebP, and HEIC files
 - **Real-time Feedback**: Upload progress and success notifications
 
@@ -25,15 +25,14 @@ Copy the environment template:
 cp .env.example .env.local
 ```
 
-**For production**, add your AWS S3 credentials to `.env.local`:
+**For production**, add your Cloudinary credentials to `.env.local`:
 ```env
-AWS_ACCESS_KEY_ID=your_aws_access_key_here
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key_here
-AWS_REGION=us-east-1
-AWS_S3_BUCKET_NAME=your-wedding-photos-bucket
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-**For development/testing**, you can leave the AWS variables empty - the app will work but photos won't be permanently stored.
+**For development/testing**, you can leave the Cloudinary variables empty - the app will work but photos won't be permanently stored.
 
 ### 3. Run the Development Server
 ```bash
@@ -112,24 +111,25 @@ Update the page title and messages to include your names and wedding details.
 - **TypeScript** - Type safety and better development experience
 - **Tailwind CSS v4** - Modern, utility-first CSS framework
 - **React Dropzone** - Drag-and-drop file uploads
-- **AWS S3** - Reliable cloud storage for photos
+- **Cloudinary** - Reliable cloud storage with automatic image optimization
 - **Lucide Icons** - Beautiful, consistent icons
 
 ## 📸 Photo Management
 
 ### Accessing Uploaded Photos
-Photos are stored in your S3 bucket under the `wedding-photos/` folder. You can:
-- Download them via the AWS Console
-- Create a simple photo gallery (separate project)
-- Use AWS CLI to sync them locally
+Photos are stored in your Cloudinary account. You can:
+- View them in the Cloudinary Dashboard
+- Download them via the web interface
+- Use Cloudinary's API to build a photo gallery
+- Get optimized URLs for sharing
 
 ### Photo Organization
-Photos are automatically named with:
+Photos are automatically stored in the `wedding-photos` folder with:
 - Timestamp
 - Random identifier
-- Original file extension
+- Automatic optimization and multiple formats
 
-Example: `wedding-photos/1691234567890-abc123def456.jpg`
+Example: `wedding-photos/1691234567890-abc123def456` (Cloudinary handles the file extension automatically)
 
 ## 🎉 Perfect for Your Big Day!
 

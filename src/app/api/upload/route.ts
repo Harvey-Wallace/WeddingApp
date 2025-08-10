@@ -1,23 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { v2 as cloudinary } from 'cloudinary';
 
-// Check if S3 is configured
-const isS3Configured = !!(
-  process.env.AWS_ACCESS_KEY_ID && 
-  process.env.AWS_SECRET_ACCESS_KEY && 
-  process.env.AWS_S3_BUCKET_NAME
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Check if Cloudinary is configured
+const isCloudinaryConfigured = !!(
+  process.env.CLOUDINARY_CLOUD_NAME && 
+  process.env.CLOUDINARY_API_KEY && 
+  process.env.CLOUDINARY_API_SECRET
 );
-
-// Configure S3 client only if credentials are available
-const s3Client = isS3Configured ? new S3Client({
-  region: process.env.AWS_REGION || 'us-east-1',
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
-}) : null;
-
-const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME || 'wedding-photos-bucket';
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,17 +27,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // If S3 is not configured, simulate success for development
-    if (!isS3Configured || !s3Client) {
-      console.log('S3 not configured - simulating upload for development');
+    // If Cloudinary is not configured, simulate success for development
+    if (!isCloudinaryConfigured) {
+      console.log('Cloudinary not configured - simulating upload for development');
       return NextResponse.json({
-        message: `Simulated upload of ${files.length} photo(s) - S3 not configured`,
+        message: `Simulated upload of ${files.length} photo(s) - Cloudinary not configured`,
         successful: files.length,
         failed: 0,
         results: files.map(file => ({
           success: true,
           fileName: file.name,
-          s3Key: `simulated-upload-${Date.now()}`,
+          url: `https://via.placeholder.com/400x300?text=${encodeURIComponent(file.name)}`,
+          publicId: `simulated-upload-${Date.now()}`,
         })),
         development: true,
       });
@@ -50,33 +47,38 @@ export async function POST(request: NextRequest) {
     const uploadPromises = files.map(async (file) => {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
+      
+      // Convert buffer to base64 for Cloudinary
+      const base64String = `data:${file.type};base64,${buffer.toString('base64')}`;
 
-      // Generate unique filename
+      // Generate unique public ID
       const timestamp = Date.now();
       const randomString = Math.random().toString(36).substring(2, 15);
-      const fileExtension = file.name.split('.').pop();
-      const fileName = `wedding-photos/${timestamp}-${randomString}.${fileExtension}`;
-
-      const uploadParams = {
-        Bucket: BUCKET_NAME,
-        Key: fileName,
-        Body: buffer,
-        ContentType: file.type,
-        Metadata: {
-          originalName: file.name,
-          uploadedAt: new Date().toISOString(),
-        },
-      };
+      const publicId = `wedding-photos/${timestamp}-${randomString}`;
 
       try {
-        await s3Client.send(new PutObjectCommand(uploadParams));
+        const result = await cloudinary.uploader.upload(base64String, {
+          public_id: publicId,
+          folder: 'wedding-photos',
+          resource_type: 'auto',
+          quality: 'auto',
+          fetch_format: 'auto',
+          context: {
+            originalName: file.name,
+            uploadedAt: new Date().toISOString(),
+          },
+        });
+
         return {
           success: true,
           fileName: file.name,
-          s3Key: fileName,
+          url: result.secure_url,
+          publicId: result.public_id,
+          width: result.width,
+          height: result.height,
         };
-      } catch (s3Error) {
-        console.error('S3 upload error:', s3Error);
+      } catch (cloudinaryError) {
+        console.error('Cloudinary upload error:', cloudinaryError);
         return {
           success: false,
           fileName: file.name,

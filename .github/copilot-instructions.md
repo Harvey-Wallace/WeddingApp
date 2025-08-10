@@ -18,7 +18,7 @@ This is a wedding photo sharing web application built with Next.js, TypeScript, 
 - **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Storage**: Cloud storage integration (AWS S3 or similar)
+- **Storage**: Cloudinary for image storage and optimization
 
 ## Design Guidelines
 - Use elegant, wedding-appropriate colors (soft pastels, whites, golds)
