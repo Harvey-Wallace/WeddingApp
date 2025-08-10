@@ -17,7 +17,7 @@ interface PhotoSlideshowProps {
   interval?: number;
 }
 
-export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: PhotoSlideshowProps) {
+export default function PhotoSlideshow({ autoPlay = true, interval = 6000 }: PhotoSlideshowProps) {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
@@ -211,15 +211,28 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
                   {new Date(currentPhoto.uploadedAt).toLocaleString()}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
-                {currentPhoto.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-1 bg-white/20 rounded-full text-xs font-light"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div className="flex items-center gap-3">
+                {/* Play/Pause Button */}
+                <button
+                  onClick={togglePlayPause}
+                  className="w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 group"
+                >
+                  {isPlaying ? (
+                    <Pause className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  ) : (
+                    <Play className="w-4 h-4 ml-0.5 group-hover:scale-110 transition-transform" />
+                  )}
+                </button>
+                <div className="flex items-center gap-2">
+                  {currentPhoto.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-1 bg-white/20 rounded-full text-xs font-light"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -242,18 +255,6 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 4000 }: Pho
             </button>
           </>
         )}
-
-        {/* Play/Pause Button */}
-        <button
-          onClick={togglePlayPause}
-          className="absolute top-6 right-6 w-12 h-12 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 group"
-        >
-          {isPlaying ? (
-            <Pause className="w-5 h-5 group-hover:scale-110 transition-transform" />
-          ) : (
-            <Play className="w-5 h-5 ml-1 group-hover:scale-110 transition-transform" />
-          )}
-        </button>
       </div>
 
       {/* Thumbnail Navigation */}
