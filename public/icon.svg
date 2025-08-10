@@ -1,23 +1,16 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="512" height="512" fill="#1a1a1a"/>
-  
-  <!-- Border -->
-  <rect x="32" y="32" width="448" height="448" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Black background -->
+  <rect width="512" height="512" fill="#000000"/>
   
   <!-- W|K Monogram -->
   <g transform="translate(256, 256)">
     <!-- W -->
-    <text x="-80" y="20" font-family="serif" font-size="120" font-weight="300" fill="white" text-anchor="middle" letter-spacing="0.1em">W</text>
+    <text x="-70" y="25" font-family="Playfair Display, serif" font-size="140" font-weight="400" fill="white" text-anchor="middle" letter-spacing="0.05em">W</text>
     
-    <!-- Divider -->
-    <line x1="0" y1="-60" x2="0" y2="60" stroke="white" stroke-width="2"/>
+    <!-- Elegant divider -->
+    <line x1="0" y1="-70" x2="0" y2="70" stroke="white" stroke-width="3" opacity="0.8"/>
     
     <!-- K -->
-    <text x="80" y="20" font-family="serif" font-size="120" font-weight="300" fill="white" text-anchor="middle" letter-spacing="0.1em">K</text>
+    <text x="70" y="25" font-family="Playfair Display, serif" font-size="140" font-weight="400" fill="white" text-anchor="middle" letter-spacing="0.05em">K</text>
   </g>
-  
-  <!-- Decorative elements -->
-  <circle cx="256" cy="120" r="2" fill="white" opacity="0.6"/>
-  <circle cx="256" cy="392" r="2" fill="white" opacity="0.6"/>
 </svg>
