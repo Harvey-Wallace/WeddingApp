@@ -1,17 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import PWAProvider from '@/components/PWAProvider';
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Kelly & William | Wedding Photos",
@@ -51,12 +39,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="W|K Photos" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
-      <body
-        className={`${inter.variable} ${playfairDisplay.variable} font-sans antialiased`}
-      >
-        <PWAProvider>
+      <body className="font-sans antialiased">
+        <div className="font-sans antialiased">
           {children}
-        </PWAProvider>
+        </div>
       </body>
     </html>
   );
