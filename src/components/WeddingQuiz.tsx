@@ -85,7 +85,7 @@ export default function WeddingQuiz() {
 
   if (submitted) {
     return (
-      <div className="max-w-2xl mx-auto py-12 px-4 text-white text-center">
+      <div className="max-w-2xl mx-auto py-12 px-4 pb-32 text-white text-center">
         <h2 className="text-3xl font-serif font-light mb-8">Thank you for playing!</h2>
         <button
           className="bg-white text-black font-serif px-8 py-3 rounded-full shadow hover:bg-gray-200 transition-all text-lg font-semibold tracking-wide"
@@ -98,7 +98,7 @@ export default function WeddingQuiz() {
   }
 
   return (
-    <form className="max-w-2xl mx-auto py-12 px-4 text-white" onSubmit={handleSubmit}>
+    <form className="max-w-2xl mx-auto py-12 px-4 pb-32 text-white" onSubmit={handleSubmit}>
       <h2 className="text-3xl font-serif font-light mb-8 text-center">Wedding Quiz</h2>
       {quizData.map((round, i) => (
         <section key={i} className="mb-10">
