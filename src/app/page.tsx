@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from 'react';
 import PhotoUpload from '@/components/PhotoUpload';
+import WeddingQuiz from '@/components/WeddingQuiz';
 import TabNavigation from '@/components/TabNavigation';
 import AddToHomeScreen from '@/components/AddToHomeScreen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -22,7 +23,7 @@ const PhotoSlideshow = dynamic(() => import('@/components/PhotoSlideshow'), {
 });
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'upload' | 'gallery'>('upload');
+  const [activeTab, setActiveTab] = useState<'upload' | 'gallery' | 'quiz'>('upload');
 
   return (
     <ErrorBoundary>
@@ -31,12 +32,11 @@ export default function Home() {
         <ErrorBoundary>
           <AddToHomeScreen />
         </ErrorBoundary>
-        
-        {activeTab === 'upload' ? (
+
+        {activeTab === 'upload' && (
           <>
             {/* Elegant background pattern */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.03),transparent_50%)]" />
-            
             <div className="relative container mx-auto px-4 py-12 pb-24">
               <header className="text-center mb-16">
                 {/* Monogram Style Header */}
@@ -46,7 +46,6 @@ export default function Home() {
                   </div>
                   <div className="w-32 h-px bg-white mx-auto mt-6 opacity-30"></div>
                 </div>
-                
                 <h1 className="text-3xl md:text-4xl font-serif font-light text-white mb-6 tracking-wide">
                   Wedding Photos
                 </h1>
@@ -54,25 +53,21 @@ export default function Home() {
                   Share your beautiful moments from our special day.<br />
                   Help us capture every magical memory of our celebration.
                 </p>
-                
                 {/* Elegant divider */}
                 <div className="flex items-center justify-center mt-8 mb-2">
                   <div className="w-12 h-px bg-gray-400"></div>
                   <div className="mx-4 text-gray-400">♦</div>
                   <div className="w-12 h-px bg-gray-400"></div>
                 </div>
-                
                 <p className="text-sm text-gray-400 uppercase tracking-widest font-light">
                   Black Tie Celebration
                 </p>
               </header>
-              
               <main className="max-w-4xl mx-auto">
                 <ErrorBoundary>
                   <PhotoUpload />
                 </ErrorBoundary>
               </main>
-              
               <footer className="text-center mt-20 text-gray-400 font-light">
                 <div className="flex items-center justify-center mb-4">
                   <div className="w-8 h-px bg-gray-600"></div>
@@ -88,7 +83,9 @@ export default function Home() {
               </footer>
             </div>
           </>
-        ) : (
+        )}
+
+        {activeTab === 'gallery' && (
           <ErrorBoundary>
             <Suspense fallback={
               <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center">
@@ -100,6 +97,12 @@ export default function Home() {
             }>
               <PhotoSlideshow />
             </Suspense>
+          </ErrorBoundary>
+        )}
+
+        {activeTab === 'quiz' && (
+          <ErrorBoundary>
+            <WeddingQuiz />
           </ErrorBoundary>
         )}
 
