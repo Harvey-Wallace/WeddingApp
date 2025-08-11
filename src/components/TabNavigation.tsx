@@ -3,11 +3,9 @@
 import { Upload, Images } from 'lucide-react';
 
 interface TabNavigationProps {
-  activeTab: 'upload' | 'gallery' | 'quiz';
-  onTabChange: (tab: 'upload' | 'gallery' | 'quiz') => void;
+  activeTab: 'upload' | 'gallery';
+  onTabChange: (tab: 'upload' | 'gallery') => void;
 }
-
-import { BookOpen } from 'lucide-react';
 
 export default function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
   return (
@@ -36,18 +34,6 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
           >
             <Images className="w-6 h-6" />
             <span className="text-xs font-light">Gallery</span>
-          </button>
-
-          <button
-            onClick={() => onTabChange('quiz')}
-            className={`flex flex-col items-center gap-1 px-6 py-3 rounded-lg transition-all duration-300 ${
-              activeTab === 'quiz'
-                ? 'bg-white/20 text-white'
-                : 'text-white/60 hover:text-white/80 hover:bg-white/10'
-            }`}
-          >
-            <BookOpen className="w-6 h-6" />
-            <span className="text-xs font-light">Quiz</span>
           </button>
         </div>
       </div>

@@ -2,7 +2,6 @@
 
 import { useState, Suspense } from 'react';
 import PhotoUpload from '@/components/PhotoUpload';
-import WeddingQuiz from '@/components/WeddingQuiz';
 import TabNavigation from '@/components/TabNavigation';
 import AddToHomeScreen from '@/components/AddToHomeScreen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -23,7 +22,7 @@ const PhotoSlideshow = dynamic(() => import('@/components/PhotoSlideshow'), {
 });
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'upload' | 'gallery' | 'quiz'>('upload');
+  const [activeTab, setActiveTab] = useState<'upload' | 'gallery'>('upload');
 
   return (
     <ErrorBoundary>
@@ -97,12 +96,6 @@ export default function Home() {
             }>
               <PhotoSlideshow />
             </Suspense>
-          </ErrorBoundary>
-        )}
-
-        {activeTab === 'quiz' && (
-          <ErrorBoundary>
-            <WeddingQuiz />
           </ErrorBoundary>
         )}
 
