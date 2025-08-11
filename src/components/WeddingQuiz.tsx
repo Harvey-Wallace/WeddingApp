@@ -110,19 +110,19 @@ export default function WeddingQuiz() {
                 <div key={idx} className="bg-black/40 rounded-lg p-4 shadow border border-white/10">
                   <p className="mb-2 font-light text-lg">{q}</p>
                   {round.type === 'choice' ? (
-                    <div className="flex gap-6 mt-2">
+                    <div className="flex flex-col gap-3 mt-2">
                       {round.options?.map((opt) => (
-                        <label key={opt} className="inline-flex items-center gap-2 cursor-pointer">
+                        <label key={opt} className="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-white/10 transition-colors min-h-[48px]">
                           <input
                             type="radio"
                             name={key}
-                            className="accent-white"
+                            className="accent-white w-5 h-5 flex-shrink-0"
                             value={opt}
                             checked={answers[key] === opt}
                             onChange={() => handleChange(key, opt)}
                             required
                           />
-                          <span className="font-light">{opt}</span>
+                          <span className="font-light text-lg flex-1">{opt}</span>
                         </label>
                       ))}
                     </div>
