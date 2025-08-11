@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
         .max_results(limit)
         .execute();
     } catch (error) {
-      console.warn(`Failed to search in folder ${customFolder}, trying broader search...`);
+      console.warn(`Failed to search in folder ${customFolder}, trying broader search...`, error);
       
       // Fallback: search by tags (wedding photos should have 'wedding' tag)
       result = await cloudinary.search
