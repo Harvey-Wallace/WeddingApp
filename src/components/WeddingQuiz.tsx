@@ -103,8 +103,8 @@ export default function WeddingQuiz() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex items-center justify-center pb-24">
-        <div className="text-center px-6">
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 flex items-center justify-center pb-24 pt-16">
+        <div className="text-center px-6 mt-4">
           {/* Elegant background pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.03),transparent_50%)]" />
           
@@ -145,8 +145,8 @@ export default function WeddingQuiz() {
       {/* Elegant background pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.03),transparent_50%)]" />
       
-      <form className="relative max-w-lg mx-auto py-8 px-4 pb-32" onSubmit={handleSubmit}>
-        <header className="text-center mb-12">
+      <form className="relative max-w-lg mx-auto py-8 px-4 pb-32 pt-16" onSubmit={handleSubmit}>
+        <header className="text-center mb-12 mt-4">
           {/* Monogram Style Header */}
           <div className="mb-6">
             <div className="text-4xl md:text-5xl text-white font-light tracking-widest">
