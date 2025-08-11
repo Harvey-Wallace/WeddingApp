@@ -72,8 +72,12 @@ export default function WeddingQuiz() {
       if (!res.ok) throw new Error('Failed to submit');
       setSubmitted(true);
       setAnswers({});
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
+      }
     } finally {
       setSubmitting(false);
     }

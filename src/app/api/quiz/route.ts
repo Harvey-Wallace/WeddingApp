@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // In-memory store for demo; replace with DB or external storage for production
-let submissions: any[] = [];
+const submissions: Record<string, unknown>[] = [];
 
 export async function POST(req: NextRequest) {
   try {
