@@ -80,15 +80,15 @@ export async function GET(request: NextRequest) {
     }) => ({
       id: resource.public_id,
       url: cloudinary.url(resource.public_id, {
-        width: 800,
-        height: 600,
-        crop: 'fill',
+        width: 1200,
+        height: 1200,
+        crop: 'limit',
         quality: 'auto'
       }),
       thumbnail: cloudinary.url(resource.public_id, {
         width: 300,
-        height: 200,
-        crop: 'fill',
+        height: 300,
+        crop: 'limit',
         quality: 'auto'
       }),
       uploadedAt: resource.uploaded_at,
