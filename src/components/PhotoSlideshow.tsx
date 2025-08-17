@@ -30,7 +30,7 @@ export default function PhotoSlideshow({ autoPlay = true, interval = 6000 }: Pho
   const fetchPhotos = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/photos?limit=50');
+      const response = await fetch('/api/photos?limit=500');
       const data = await response.json();
       
       if (!response.ok) {
